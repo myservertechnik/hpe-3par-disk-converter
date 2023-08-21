@@ -1,5 +1,5 @@
 # hpe-3par-disk-converter
-A Bash Script for the conversation of HPE 3par SAN disks for the use on a normal HPE Server
+A Bash Script for the transformation of HPE 3par SAN disks for the use on a normal HPE Server.
 
 ## Installation
 1. Clone this Repo to your Server
