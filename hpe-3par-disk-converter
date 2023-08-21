@@ -1,0 +1,19 @@
+#!/bin/bash
+trap SIGINT
+set -e
+set -o pipefail
+
+check_for_root_user(){
+	if [ "$(id -u)" != "0" ]; then
+	   echo "This script must be run as root" 1>&2
+	   exit 1
+	fi
+}
+main(){
+	check_for_root_user
+	for line in $(lsblk | grep 0B | awk '{print $1}')
+	do
+		bash hpe-3par-disk-converter-task "${line}" &
+	done
+}
+main
