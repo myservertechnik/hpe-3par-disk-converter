@@ -1,0 +1,32 @@
+#!/bin/bash
+trap SIGINT
+set -e
+set -o pipefail
+log="log-dev-$1-$(date +'%Y%m%d')"
+
+check_for_run_conditions(){
+	if [ "$0" != "hpe-3par-disk-converter-task" ]; then
+	   echo "This script must be run from the Script \"hpe-3par-disk-converter-task\"" 1>&2
+	   exit 1
+	fi
+	if [ "$1" != "" ]; then
+	   echo "This script must be run from the Script \"hpe-3par-disk-converter-task\" with the parameter of an disk \"example:sdb\"" 1>&2
+	   exit 1
+	fi
+}
+main(){
+	check_for_run_conditions
+	echo "START at $(date +'%Y%m%d-%H:%M:%S')" > ${log}
+	sg_format --format --ffmt=1 --size=520 /dev/$1 >> ${log}
+	sg_format --format --ffmt=1 --size=512 /dev/$1 >> ${log}
+	if [ "$(lsblk | grep "$1 " | awk '{print $4}')" != "0B" ]
+	then
+		wall "The Convertation of /dev/$1 was SUCCESSFUL"
+		echo "The Convertation of /dev/$1 was SUCCESSFUL" >> ${log}
+	else
+		wall "The Convertation of /dev/$1 FAILD"
+		echo "The Convertation of /dev/$1 FAILD" >> ${log}
+	fi
+	echo "END at $(date +'%Y%m%d-%H:%M:%S')" >> ${log}
+}
+main
