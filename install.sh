@@ -13,7 +13,14 @@ check_for_root_user(){
 }
 main(){
 	check_for_root_user
- 	apt install
+ 	if [ -f /etc/redhat-release ]
+  	then
+   		dnf install sg3_utils
+   	fi
+    	if [ -f /etc/debian_version ]
+  	then
+ 		apt install sg3-utils
+  	fi
 	if [ -f "${pathtoscript}" ] && [ -f "${pathtotask}" ]
 	then
 		cp ${pathtoscript} /usr/local/bin/bash
