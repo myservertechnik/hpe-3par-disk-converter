@@ -21,11 +21,11 @@ main(){
 	sg_format --format --ffmt=1 --size=512 /dev/$1 >> ${log}
 	if [ "$(lsblk | grep "$1 " | awk '{print $4}')" != "0B" ]
 	then
-		wall "The Convertation of /dev/$1 was SUCCESSFUL"
-		echo "The Convertation of /dev/$1 was SUCCESSFUL" >> ${log}
+		wall "The Transformation of /dev/$1 was SUCCESSFUL"
+		echo "The Transformation of /dev/$1 was SUCCESSFUL" >> ${log}
 	else
-		wall "The Convertation of /dev/$1 FAILD"
-		echo "The Convertation of /dev/$1 FAILD" >> ${log}
+		wall "The Transformation of /dev/$1 FAILD"
+		echo "The Transformation of /dev/$1 FAILD" >> ${log}
 	fi
 	echo "END at $(date +'%Y%m%d-%H:%M:%S')" >> ${log}
 }
